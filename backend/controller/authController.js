@@ -195,10 +195,6 @@ const updateProfile = async (req, res) => {
     return res.status(400).json({ message: "Name is required" });
   }
 
-  if (!userId) {
-    return res.status(401).json({ message: "User not authorized" });
-  }
-
   const loggedInuser = await User.findById(userId);
 
   if (!loggedInuser) {
@@ -216,4 +212,4 @@ const updateProfile = async (req, res) => {
   });
 };
 
-export { registerUser, LoginUser, getProfile, updateProfile };
+export { registerUser, LoginUser, getProfile, updateProfile, refreshAccessToken };
