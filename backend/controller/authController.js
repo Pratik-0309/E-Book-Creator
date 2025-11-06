@@ -12,7 +12,9 @@ const generateAccessAndRefreshTokens = async (userId) => {
     const refreshToken = user.generateRefreshToken();
 
     if (!accessToken || !refreshToken) {
-      throw new Error("Token generation failed — missing return in schema methods?");
+      throw new Error(
+        "Token generation failed — missing return in schema methods?"
+      );
     }
 
     user.refreshToken = refreshToken;
@@ -22,6 +24,63 @@ const generateAccessAndRefreshTokens = async (userId) => {
   } catch (error) {
     console.error("Token generation error:", error);
     throw new Error("Something went wrong while generating tokens");
+  }
+};
+
+const refreshAccessToken = async (req, res) => {
+  try {
+    const incomingRefreshToken =
+      req.cookies.refreshToken || req.body.refreshToken;
+
+    if (!incomingRefreshToken) {
+      return res.status(404).json({
+        message: "Refresh token is missing or unauthorized.",
+      });
+    }
+
+    const decodedToken = jwt.verify(
+      incomingRefreshToken,
+      process.env.REFRESH_TOKEN_SECRET
+    );
+
+    const user = await User.findById(decodedToken._id);
+
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: "Invalid user ID found in refresh token." });
+    }
+
+    if (incomingRefreshToken !== user?.refreshToken) {
+      return res
+        .status(401)
+        .json({
+          message: "Refresh Token is Expired or Used (Logout required).",
+        });
+    }
+
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+
+    const { accessToken, newRefreshToken } =
+      await generateAccessAndRefreshTokens(user._id);
+
+    return res
+      .status(200)
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", newRefreshToken, options)
+      .json({
+        message: "Access token refreshed successfully",
+      });
+  } catch (error) {
+    console.error("Token refresh failed:", error);
+    return res
+      .status(401)
+      .clearCookie("accessToken")
+      .clearCookie("refreshToken")
+      .json({ message: "Could not refresh token. Please log in again." });
   }
 };
 
@@ -48,7 +107,7 @@ const registerUser = async (req, res) => {
 
     if (user) {
       return res.json({
-        user : user,
+        user: user,
         message: "User registered successfully",
       });
     } else {
@@ -121,7 +180,7 @@ const getProfile = async (req, res) => {
     }
 
     return res.status(200).json({
-     user: loggedInuser
+      user: loggedInuser,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -129,33 +188,32 @@ const getProfile = async (req, res) => {
 };
 
 const updateProfile = async (req, res) => {
- const userId = req.user._id;
- const {name} = req.body;
+  const userId = req.user._id;
+  const { name } = req.body;
 
- if(!name){
-    return res.status(400).json({message:"Name is required"});
- }
+  if (!name) {
+    return res.status(400).json({ message: "Name is required" });
+  }
 
- if(!userId){
-    return res.status(401).json({message:"User not authorized"});
- }
+  if (!userId) {
+    return res.status(401).json({ message: "User not authorized" });
+  }
 
- const loggedInuser = await User.findById(userId);
+  const loggedInuser = await User.findById(userId);
 
- if(!loggedInuser){
-    return res.status(404).json({message:"User not found"});
- }  
+  if (!loggedInuser) {
+    return res.status(404).json({ message: "User not found" });
+  }
 
- loggedInuser.name = name 
- loggedInuser.save();
+  loggedInuser.name = name;
+  loggedInuser.save();
 
- console.log("Profile updated for user:", loggedInuser.email);
+  console.log("Profile updated for user:", loggedInuser.email);
 
- return  res.status(200).json({ 
-    user : loggedInuser,
-    message: "Profile updated successfully"
- });
-
+  return res.status(200).json({
+    user: loggedInuser,
+    message: "Profile updated successfully",
+  });
 };
 
 export { registerUser, LoginUser, getProfile, updateProfile };

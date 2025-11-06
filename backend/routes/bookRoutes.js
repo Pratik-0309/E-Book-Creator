@@ -1,6 +1,6 @@
 import express from 'express';
 import verifyJWT from '../middleware/authMiddleware.js';
-import { createBook, getBooks , getBookById , updateBook, deleteBook, updateCoverImage } from '../controller.js/bookController.js';
+import { createBook, getBooks , getBookById , updateBook, deleteBook, updateCoverImage } from '../controller/bookController.js';
 import upload from '../middleware/multerMiddleware.js';
 const router = express.Router();
 

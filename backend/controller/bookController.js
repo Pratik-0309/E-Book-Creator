@@ -10,7 +10,6 @@ const createBook = async (req, res) => {
       });
     }
 
-
     const book = await Book.create({
       userId: req.user._id,
       title,

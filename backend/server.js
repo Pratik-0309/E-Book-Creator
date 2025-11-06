@@ -5,12 +5,14 @@ import path from 'path';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import bookRoutes from './routes/bookRoutes.js';
+import aiRoutes from "./routes/aiRoutes.js"
 import cookieParser from 'cookie-parser';
     
 dotenv.config();
 
 const app = express();
 app.use(cookieParser());
+app.use(express.json());
 
 // app.use("/backend/uploads", express.static(path.join(__dirname,"uploads")));
 
@@ -27,6 +29,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
+app.use("/api/ai",aiRoutes);
 
 
 const PORT = process.env.PORT || 8000;
