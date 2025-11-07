@@ -5,7 +5,8 @@ import path from 'path';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import bookRoutes from './routes/bookRoutes.js';
-import aiRoutes from "./routes/aiRoutes.js"
+import aiRoutes from "./routes/aiRoutes.js";
+import exportRoutes from "./routes/exportRoutes.js"
 import cookieParser from 'cookie-parser';
     
 dotenv.config();
@@ -30,6 +31,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/ai",aiRoutes);
+app.use("/api/export",exportRoutes);
 
 
 const PORT = process.env.PORT || 8000;
