@@ -16,7 +16,6 @@ import fetch from "node-fetch";
 
 const md = new MarkdownIt();
 
-/* ✅ Custom HTML Entity Decoder — NO external package needed */
 const decodeEntities = (str = "") => {
     return str
         .replace(/&quot;/g, '"')
@@ -33,7 +32,6 @@ const decodeEntities = (str = "") => {
 };
 
 
-/* ✅ Fetch Image Buffer (Cloudinary URL or Local Path) */
 const fetchImageBuffer = async (imageSource) => {
     if (imageSource.startsWith("http://") || imageSource.startsWith("https://")) {
         const response = await fetch(imageSource);
@@ -57,7 +55,6 @@ const fetchImageBuffer = async (imageSource) => {
 };
 
 
-/* ✅ Convert Markdown → DOCX Paragraphs */
 const parseMarkdownToDocx = (markdownText) => {
     const html = md.render(markdownText);
     const docxElements = [];
@@ -69,7 +66,6 @@ const parseMarkdownToDocx = (markdownText) => {
         const tag = block.match(/^<(h[1-6]|p|li)>/i)[1];
         const innerHtml = block.replace(/<\/?(h[1-6]|p|li)>/gi, "").trim();
 
-        // ✅ Clean HTML tags and decode entities
         const cleaned = innerHtml.replace(/<[^>]+>/g, "");
         const finalText = decodeEntities(cleaned);
 
@@ -99,7 +95,6 @@ const parseMarkdownToDocx = (markdownText) => {
 };
 
 
-/* ✅ MAIN EXPORT CONTROLLER */
 const exportAsDocument = async (req, res) => {
     let imageBuffer = null;
 
@@ -118,7 +113,7 @@ const exportAsDocument = async (req, res) => {
 
         const documentSections = [];
 
-        /* ✅ COVER IMAGE PAGE */
+       
         if (book.coverImage) {
             try {
                 imageBuffer = await fetchImageBuffer(book.coverImage);
@@ -153,7 +148,7 @@ const exportAsDocument = async (req, res) => {
             }
         }
 
-        /* ✅ TITLE PAGE */
+        
         documentSections.push({
             children: [
                 new Paragraph({
@@ -196,7 +191,6 @@ const exportAsDocument = async (req, res) => {
             ],
         });
 
-        /* ✅ CHAPTERS */
         for (const chapter of book.chapters) {
             const chapterContent = [];
 
@@ -229,7 +223,6 @@ const exportAsDocument = async (req, res) => {
             documentSections.push({ children: chapterContent });
         }
 
-        /* ✅ GENERATE DOCX */
         const doc = new Document({ sections: documentSections });
         const buffer = await Packer.toBuffer(doc);
 
