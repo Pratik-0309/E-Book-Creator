@@ -170,6 +170,32 @@ const LoginUser = async (req, res) => {
   }
 };
 
+const LogoutUser = async(req,res) =>{
+  try {
+    // Optional: also clear the refreshToken in DB
+    const userId = req.user?._id; 
+    if (userId) {
+      await User.findByIdAndUpdate(userId, { refreshToken: "" });
+    }
+
+    // Clear cookies
+    res
+      .clearCookie("accessToken", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .clearCookie("refreshToken", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .json({ message: "Logged out successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error while logging out" });
+  }
+}
+
 const getProfile = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -212,4 +238,4 @@ const updateProfile = async (req, res) => {
   });
 };
 
-export { registerUser, LoginUser, getProfile, updateProfile, refreshAccessToken };
+export { registerUser, LoginUser,LogoutUser, getProfile, updateProfile, refreshAccessToken };
