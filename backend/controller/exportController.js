@@ -80,7 +80,7 @@ const parseMarkdownToDocx = (markdownText) => {
                     new TextRun({
                         text: finalText,
                         bold: heading ? true : false,
-                        size: 22,
+                        size: 26,
                     }),
                 ],
                 heading,
