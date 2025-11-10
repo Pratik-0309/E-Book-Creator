@@ -36,17 +36,17 @@ export const TESTIMONIALS = [
     rating: 5,
   },
   {
-    quote: 'I love the customizable templates. I was able to create a beautiful ebook that matches my brand perfec',
+    quote: 'I love the customizable templates. I was able to create a beautiful ebook that matches my brand perfect',
     author: 'John Smith',
     title: 'Marketing Expert',
-    avatar: 'https://images.unsplash.com/photo-1472095645785-5638eb4f4e?w=100&h=100&fit=crop',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=600p',
     rating: 5,
   },
  { 
-    quote: 'The one-click export feature saved me so much time. I was able to publish my ebook on multiple platfo',
+    quote: 'The one-click export feature saved me. I was able to publish my ebook on multiple platform',
     author: 'Peter Jones',
     title: 'Indie Publisher',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994d43e?w=100&h=100&fit=crop',
+    avatar: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=600',
     rating: 5,
   }
 ];
