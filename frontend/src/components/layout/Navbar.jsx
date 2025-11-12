@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { useState, useEffect, useRef } from "react"; // <-- Import useRef
 import { useAuth } from "../../context/AuthContext.jsx";
 import ProfileDropDown from "../layout/Profiledropdown.jsx";
-import { Menu, X, BookOpen, LogOut } from "Lucide-react";
+import { Menu, X, BookOpen, LogOut } from "Lucide-react"; 
 
 function Navbar() {
   const { user, isAuthenticated } = useAuth();
   const [isOpen, setIsOpen] = useState(false); // Controls mobile menu
   const [profileDropDownOpen, setProfileDropDownOpen] = useState(false);
+  const dropdownRef = useRef(null); // <-- Ref for the dropdown container
 
   const navLinks = [
     { name: "Features", href: "#features" },
@@ -14,17 +16,27 @@ function Navbar() {
   ];
 
   useEffect(() => {
-    const handleClickOutside = () => {
-      if (profileDropDownOpen) {
+    // 🛠️ FIX: Close dropdown only if the click is OUTSIDE the container
+    const handleClickOutside = (event) => {
+      // Check if the dropdown is open AND if the click target is NOT inside the ref's current element
+      if (profileDropDownOpen && dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setProfileDropDownOpen(false);
       }
     };
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
+    
+    document.addEventListener("mousedown", handleClickOutside); // Use mousedown for better compatibility
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [profileDropDownOpen]);
 
   // Helper function to close the menu on link click
   const closeMenu = () => setIsOpen(false);
+
+  // Helper function for logout (use onLogout prop in ProfileDropDown)
+  const handleLogout = () => {
+    console.log("Logout initiated");
+    // You would typically call a logout function from your AuthContext here:
+    // logout(); 
+  };
 
   return (
     <header className="sticky top-0 bg-white border-b border-gray-100 shadow-md z-30">
@@ -55,21 +67,18 @@ function Navbar() {
           ))}
         </ul>
 
-        {/* Auth Button & Profile */}
+        {/* Right: Auth Button & Profile */}
         <div className="flex items-center space-x-4">
+          {/* Desktop/Tablet (md breakpoint and up) */}
           {isAuthenticated ? (
-            <div id="profile-dropdown-container" className="hidden md:block">
+            <div ref={dropdownRef} className="hidden md:block"> 
               <ProfileDropDown
                 isOpen={profileDropDownOpen}
-                onToggle={(e) => {
-                  e.stopPropagation();
-                  setProfileDropDownOpen(!profileDropDownOpen);
-                }}
+                onToggle={() => setProfileDropDownOpen(!profileDropDownOpen)}
                 avatar={user?.avatar || ""}
-                companyName={user?.name || ""}
-                email={user?.email || ""}
-                userRole={user?.role || "User"}
-                onLogout={() => console.log("logout")}
+                companyName={user?.name || "User"}
+                email={user?.email || "user@example.com"}
+                onLogout={handleLogout} // Use the new handler
               />
             </div>
           ) : (
@@ -104,6 +113,7 @@ function Navbar() {
         </div>
       </nav>
 
+      {/* Mobile Menu */}
       <div
         className={`md:hidden absolute w-full bg-white shadow-lg transition-all duration-300 ease-in-out ${
           isOpen
@@ -124,7 +134,7 @@ function Navbar() {
             </li>
           ))}
 
-          {/* Mobile Auth/Profile Links */}
+          {/* Mobile Auth/Profile Links - Simplified for mobile */}
           <li className="pt-2 border-t border-gray-100 mt-2">
             {!isAuthenticated ? (
               <div className="flex flex-col space-y-3">
@@ -146,7 +156,7 @@ function Navbar() {
             ) : (
               <button
                 onClick={() => {
-                  console.log("logout");
+                  handleLogout(); // Use the handler
                   closeMenu();
                 }}
                 className="w-full flex items-center justify-center space-x-2 px-4 py-2 text-sm font-semibold text-red-600 border border-red-600 rounded-lg hover:bg-red-50 transition duration-150"
