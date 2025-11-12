@@ -65,7 +65,7 @@ const Profiledropdown = ({
           <div className="py-1">
             <a
               onClick={() => {
-                navigate("/api/auth/profile");
+                navigate("/profile");
                 onToggle(); // Close dropdown after clicking
               }}
               className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
