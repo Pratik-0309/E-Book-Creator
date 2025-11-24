@@ -18,15 +18,13 @@ app.use(express.json());
 // app.use("/backend/uploads", express.static(path.join(__dirname,"uploads")));
 
 app.use(cors({
-    origin: '*',
+    origin: 'http://localhost:5173', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
-
+    credentials: true,
 }))
 
 
 connectDB();
-app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
