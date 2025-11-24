@@ -1,3 +1,4 @@
+// context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
 import axiosInstance from "../utils/axiosInstance.js";
 
@@ -14,7 +15,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     checkAuthStatus();
@@ -22,21 +23,20 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuthStatus = async () => {
     try {
-      const res = await axiosInstance.get("api/auth/profile"); // protected route
+      const res = await axiosInstance.get("/api/auth/profile"); // protected route
       setUser(res.data.user);
       setIsAuthenticated(true);
     } catch (error) {
       console.error(`Auth check failed:`, error);
-      logout();
+      setUser(null);
+      setIsAuthenticated(false);
     } finally {
-      // code that always run no matter which block is executed
       setLoading(false);
     }
   };
 
-  const login = async (userData) => {
-    const res = await axiosInstance.post("/api/auth/login", userData);
-    setUser(res.data.user);
+  const login = (user) => {
+    setUser(user);
     setIsAuthenticated(true);
   };
 
@@ -72,5 +72,5 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus,
   };
 
-  return <AuthContext.Provider value={value}> {children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

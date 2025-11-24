@@ -1,14 +1,14 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react"; // <-- Import useRef
+import { useState, useEffect, useRef } from "react"; 
 import { useAuth } from "../../context/AuthContext.jsx";
 import ProfileDropDown from "../layout/Profiledropdown.jsx";
-import { Menu, X, BookOpen, LogOut } from "Lucide-react"; 
+import { Menu, X, BookOpen, LogOut } from "lucide-react"; 
 
 function Navbar() {
   const { user, isAuthenticated } = useAuth();
-  const [isOpen, setIsOpen] = useState(false); // Controls mobile menu
+  const [isOpen, setIsOpen] = useState(false); 
   const [profileDropDownOpen, setProfileDropDownOpen] = useState(false);
-  const dropdownRef = useRef(null); // <-- Ref for the dropdown container
+  const dropdownRef = useRef(null);
 
   const navLinks = [
     { name: "Features", href: "#features" },
@@ -16,9 +16,7 @@ function Navbar() {
   ];
 
   useEffect(() => {
-    // 🛠️ FIX: Close dropdown only if the click is OUTSIDE the container
     const handleClickOutside = (event) => {
-      // Check if the dropdown is open AND if the click target is NOT inside the ref's current element
       if (profileDropDownOpen && dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setProfileDropDownOpen(false);
       }
@@ -28,14 +26,10 @@ function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [profileDropDownOpen]);
 
-  // Helper function to close the menu on link click
   const closeMenu = () => setIsOpen(false);
 
-  // Helper function for logout (use onLogout prop in ProfileDropDown)
   const handleLogout = () => {
     console.log("Logout initiated");
-    // You would typically call a logout function from your AuthContext here:
-    // logout(); 
   };
 
   return (
