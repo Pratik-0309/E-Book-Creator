@@ -24,6 +24,7 @@ function App() {
         <Route path='/dashboard' 
         element={<ProtectedRoute> <DashboardPage/> </ProtectedRoute>}
         />
+        
         <Route path='/editor/:bookId'
         element={<ProtectedRoute> <EditorPage/> </ProtectedRoute>}
         />
