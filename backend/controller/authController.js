@@ -7,7 +7,8 @@ const isProduction = process.env.NODE_ENV === "production";
 const cookieOptions = {
   httpOnly: true,
   secure: isProduction, // secure only in production
-  sameSite: isProduction ? "strict" : "lax",
+  sameSite: isProduction ? "none" : "lax",
+   path: "/",  
 };
 
 const generateAccessAndRefreshTokens = async (userId) => {
