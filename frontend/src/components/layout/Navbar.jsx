@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect, useRef } from "react"; 
 import { useAuth } from "../../context/AuthContext.jsx";
 import ProfileDropDown from "../layout/Profiledropdown.jsx";
-import { Menu, X, BookOpen, LogOut } from "lucide-react"; 
+import { Menu, X, BookOpen, LogOut } from "Lucide-react"; 
 
 function Navbar() {
   const { user, isAuthenticated } = useAuth();

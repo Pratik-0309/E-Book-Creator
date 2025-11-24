@@ -1,7 +1,7 @@
 // pages/LoginPage.jsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Mail, Lock, BookOpen } from "lucide-react"; // ✅ lowercase
+import { Mail, Lock, BookOpen } from "Lucide-react"; 
 import toast from "react-hot-toast";
 
 import InputField from "../components/ui/InputField";
@@ -62,7 +62,7 @@ function LoginPage() {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-2xl p-8 pt-6">
+        <div className="bg-white border border-slate-200 rounded-xl shadow-2xl p-8 pt-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             <InputField
               label="Email"
