@@ -37,7 +37,9 @@ const getBooks = async (req, res) => {
         message: "Unauthorized Access",
       });
     }
-    const books = await Book.find({ userId });
+    const books = await Book.find({ userId })
+      .populate("userId", "name email"); 
+      
     if (!books) {
       return res.status(404).json({
         message: "No Books Found",
