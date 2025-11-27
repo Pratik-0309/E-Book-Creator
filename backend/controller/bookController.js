@@ -4,7 +4,7 @@ import uploadOnCloudinary from "../cloudinary.js";
 const createBook = async (req, res) => {
   try {
     const { title, subtitle, chapters } = req.body;
-    if (!title || !subtitle) {
+    if (!title) {
       return res.json({
         message: "provide Required field",
       });
@@ -22,7 +22,7 @@ const createBook = async (req, res) => {
       book: book,
     });
   } catch (error) {
-      console.log(error.message);
+    console.log(error.message);
     return res.status(404).json({
       message: "Error While Creating Book",
     });
@@ -37,9 +37,8 @@ const getBooks = async (req, res) => {
         message: "Unauthorized Access",
       });
     }
-    const books = await Book.find({ userId })
-      .populate("userId", "name email"); 
-      
+    const books = await Book.find({ userId }).populate("userId", "name email");
+
     if (!books) {
       return res.status(404).json({
         message: "No Books Found",
