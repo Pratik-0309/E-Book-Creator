@@ -21,19 +21,20 @@ function DashboardLayout({ children }) {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      <div className="flex-1 flex flex-col">
-        <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 h-16 flex items-center
-        justify-between px-6 sticky top-0 z-30">
-          <div className="flex items-center space-x-4">
+      <div className="flex-1 flex flex-col ">
+        <header className="sticky top-0 bg-white border-b border-gray-200 shadow-sm z-30">
+          <div className="flex items-center justify-between h-16 px-4 mx-auto w-full max-w-[1400px]">
+            {/* Left side - Logo */}
             <Link className="flex items-center space-x-3" to="/dashboard">
-              <div className="h-8 w-8 bg-gradient-to-br from-violet-400 to-violet-500 rounded-lg
-               flex items-center justify-center">
+              <div className="h-9 w-9 bg-gradient-to-br from-violet-500 to-violet-600 rounded-lg flex items-center justify-center">
                 <Album className="h-5 w-5 text-white" />
               </div>
-              <span className="text-black font-bold text-xl">AI ebook Creator</span>
+              <span className="text-gray-900 text-xl font-extrabold hover:text-blue-700 transition duration-150 text-[22px] tracking-tight">
+                AI eBook Creator
+              </span>
             </Link>
-          </div>
-          <div className="flex items-center space-x-3 ">
+
+            {/* Right side - Profile */}
             <Profiledropdown
               isOpen={ProfiledropdownOpen}
               onToggle={(e) => {
@@ -47,6 +48,7 @@ function DashboardLayout({ children }) {
             />
           </div>
         </header>
+
         <main className="flex-1 overflow-auto">{children}</main>
       </div>
     </div>
