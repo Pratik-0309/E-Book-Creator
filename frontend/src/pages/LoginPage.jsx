@@ -1,7 +1,7 @@
 // pages/LoginPage.jsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Mail, Lock, BookOpen } from "Lucide-react"; 
+import { Mail, Lock, BookOpen } from "Lucide-react";
 import toast from "react-hot-toast";
 
 import InputField from "../components/ui/InputField";
@@ -31,10 +31,10 @@ function LoginPage() {
     setIsLoading(true);
     try {
       const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, formData);
-      const { user } = response.data; // token not used (cookies handle auth)
+      const { user } = response.data;
       login(user);
       toast.success(`Welcome back, ${user.name || user.email}!`);
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       console.error("Login error:", err);
       const errorMessage =
