@@ -235,7 +235,7 @@ function CreateBookModal({ isOpen, onClose, onBookCreated }) {
                   <div className="flex items-start gap-3 mb-3">
                     <div
                       className="flex items-center justify-center w-5 h-6 rounded-full bg-violet-50 
-                    text-violet-600 text-xs font-semibold flex-shrink-0"
+                    text-violet-600 text-xs font-semibold shrink-0"
                     >
                       {index + 1}
                     </div>
