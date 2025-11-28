@@ -97,7 +97,7 @@ function CreateBookModal({ isOpen, onClose, onBookCreated }) {
         author: user.name || "Unknown Author",
         chapters: chapters,
       })
-      console.log(response);
+      // console.log(response);
       toast.success("E-book Created Successfully.")
       onBookCreated(response.data.book._id)
       onClose()
