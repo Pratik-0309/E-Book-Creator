@@ -19,7 +19,7 @@ export const API_PATHS = {
         GENERATE_CHAPTER_CONTENT: "/api/ai/generate-chapter-content",
     },
     EXPORT:{
-        DOCX: "api/"
+        DOCX: "api/export"
     },
 };
 
