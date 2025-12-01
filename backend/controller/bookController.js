@@ -96,24 +96,24 @@ const updateBook = async (req, res) => {
       return res.status(401).json({ message: "User not logged in" });
     }
 
-    const book = await Book.findById(bookId);
+    const booktobeupdate = await Book.findById(bookId);
 
-    if (!book) {
+    if (!booktobeupdate) {
       return res.status(404).json({ message: "Book not found" });
     }
 
-    if (req.user._id.toString() !== book.userId.toString()) {
+    if (req.user._id.toString() !== booktobeupdate.userId.toString()) {
       return res.status(400).json({
         message: "Unauthorized Request",
       });
     }
 
-    const updatedBook = await Book.findByIdAndUpdate(bookId, req.body, {
+    const book = await Book.findByIdAndUpdate(bookId, req.body, {
       new: true,
     });
 
     return res.status(200).json({
-      updatedBook,
+      book,
       message: "Book updated successfully",
     });
   } catch (error) {
