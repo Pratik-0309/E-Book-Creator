@@ -77,6 +77,7 @@ const getBookById = async (req, res) => {
     }
     return res.status(200).json({
       book,
+      user: req.user,
       message: "Book Fetched Successfully",
     });
   } catch (error) {
