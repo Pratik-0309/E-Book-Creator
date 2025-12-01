@@ -10,9 +10,9 @@ router.use(verifyJWT);
 router.route("/create-book").post(createBook);
 router.route("/get-books").get(getBooks);
 router.route("/get-book/:bookId").get(getBookById);
-router.route("/update-book/:bookId").patch(updateBook);
+router.route("/update-book/:bookId").put(updateBook);
 router.route("/delete-book/:bookId").delete(deleteBook);    
-router.route("/update-coverimage/:bookId").patch(upload.single("coverImage"),updateCoverImage);
+router.route("/update-coverimage/:bookId").put(upload.single("coverImage"),updateCoverImage);
 
 
 
