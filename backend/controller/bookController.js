@@ -150,9 +150,9 @@ const updateCoverImage = async (req, res) => {
   const { bookId } = req.params;
   const coverImageLocalPath = req.file?.path;
 
-  const book = await Book.findById(bookId);
+  const booktobeupdate = await Book.findById(bookId);
 
-  if (req.user._id.toString() !== book.userId.toString()) {
+  if (req.user._id.toString() !== booktobeupdate.userId.toString()) {
     return res.status(400).json({
       message: "Unauthorized Request",
     });
@@ -165,7 +165,7 @@ const updateCoverImage = async (req, res) => {
     });
   }
 
-  const updatedBook = await Book.findByIdAndUpdate(
+  const book = await Book.findByIdAndUpdate(
     bookId,
     {
       $set: { coverImage: coverImage.secure_url },
@@ -174,7 +174,7 @@ const updateCoverImage = async (req, res) => {
   );
 
   return res.status(200).json({
-    updatedBook,
+    coverImage: book.coverImage,
     message: "Cover Image Updated Successfully",
   });
 };
