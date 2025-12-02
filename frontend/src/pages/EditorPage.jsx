@@ -103,11 +103,11 @@ function EditorPage() {
   const handleDeleteChapter = (index) => {
     setBook((prevBook) => {
       const chapters = prevBook.book?.chapters || [];
-      console.log("Chapters before deletion:", chapters); 
+      console.log("Chapters before deletion:", chapters);
 
       if (chapters.length <= 1) {
         toast.error("A Book must have at least one chapter.");
-        return prevBook; 
+        return prevBook;
       }
       const updatedChapters = chapters.filter((_, i) => i !== index);
       const newIndex = Math.min(index, updatedChapters.length - 1);
@@ -134,6 +134,7 @@ function EditorPage() {
         `${API_PATHS.BOOKS.UPDATE_BOOK}/${bookId}`,
         bookToSave
       );
+      console.log("Book saved:", bookToSave);
       if (showToast) toast.success("Changes saved successfully.");
     } catch (error) {
       console.log(error);
@@ -153,7 +154,7 @@ function EditorPage() {
     setIsUploading(true);
     try {
       const response = await axiosInstance.put(
-        `${API_PATHS.BOOKS.UPLOAD_COVER_IMAGE}/${bookId}`,
+        `${API_PATHS.BOOKS.UPDATE_COVER}/${bookId}`,
         formData,
         {
           headers: {
@@ -161,7 +162,14 @@ function EditorPage() {
           },
         }
       );
-      setBook((prev) => ({ ...prev, coverImage: response.data.coverImage }));
+      console.log(response.data);
+      setBook((prev) => ({
+        ...prev,
+        book: {
+          ...prev.book,
+          coverImage: response.data.coverImage,
+        },
+      }));
       toast.success("Cover image uploaded successfully.");
     } catch (error) {
       toast.error("Failed to upload cover image.");
@@ -192,11 +200,13 @@ function EditorPage() {
         const updatedChapters = chapters.map((ch, idx) =>
           idx === index ? { ...ch, content: response.data.content } : ch
         );
+        
         const updatedInnerBook = {
           ...prevBookState.book,
           chapters: updatedChapters,
         };
         finalUpdatedState = { ...prevBookState, book: updatedInnerBook };
+        console.log(finalUpdatedState);
         return finalUpdatedState;
       });
       setSelectedChapterIndex(index);
@@ -210,7 +220,6 @@ function EditorPage() {
     }
   };
 
-  // done {name for docx export pending}
   const handleExportDoc = async () => {
     toast.loading("Generating Document ....");
     try {
@@ -218,10 +227,10 @@ function EditorPage() {
         `${API_PATHS.EXPORT.DOCX}/${bookId}/docx`,
         { responseType: "blob" }
       );
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const url = window.URL.createObjectURL(new Blob([response.data.book]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `${book.title || "untitled"}.docx`);
+      link.setAttribute("download", `${book.book.title || "untitled"}.docx`);
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
