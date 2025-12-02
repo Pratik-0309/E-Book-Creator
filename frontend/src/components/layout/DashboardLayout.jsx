@@ -26,7 +26,7 @@ function DashboardLayout({ children }) {
           <div className="flex items-center justify-between h-16 px-4 mx-auto w-full max-w-[1400px]">
             {/* Left side - Logo */}
             <Link className="flex items-center space-x-3" to="/dashboard">
-              <div className="h-9 w-9 bg-gradient-to-br from-violet-500 to-violet-600 rounded-lg flex items-center justify-center">
+              <div className="h-9 w-9 bg-linear-to-br from-violet-500 to-violet-600 rounded-lg flex items-center justify-center">
                 <Album className="h-5 w-5 text-white" />
               </div>
               <span className="text-gray-900 text-xl font-extrabold hover:text-blue-700 transition duration-150 text-[22px] tracking-tight">
