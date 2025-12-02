@@ -11,7 +11,7 @@ const BookCard = ({ book, onDelete }) => {
     <div
       className="group relative bg-white rounded-xl overflow-hidden border border-gray-100 hover:border-gray-200 
     transition-all duration-300 hover:shadow-xl hover:shadow-gray-100/50 hover:translate-y-1 cursor-pointer"
-      onClick={() => navigate(`/books/${book._id}`)}
+      onClick={() => navigate(`/view-book/${book._id}`)}
     >
       <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 ">
         <img
