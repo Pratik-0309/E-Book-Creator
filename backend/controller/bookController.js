@@ -104,14 +104,18 @@ const updateBook = async (req, res) => {
     }
 
     if (req.user._id.toString() !== booktobeupdate.userId.toString()) {
-      return res.status(400).json({
+      return res.status(403).json({
         message: "Unauthorized Request",
       });
     }
 
-    const book = await Book.findByIdAndUpdate(bookId, req.body, {
-      new: true,
-    });
+   const updateData = req.body.book || req.body; 
+
+    const book = await Book.findByIdAndUpdate(
+        bookId, 
+        { $set: updateData }, 
+        { new: true, runValidators: true } 
+    );
 
     return res.status(200).json({
       book,
