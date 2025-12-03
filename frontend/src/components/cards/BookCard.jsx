@@ -13,11 +13,11 @@ const BookCard = ({ book, onDelete }) => {
     transition-all duration-300 hover:shadow-xl hover:shadow-gray-100/50 hover:translate-y-1 cursor-pointer"
       onClick={() => navigate(`/view-book/${book._id}`)}
     >
-      <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 ">
+      <div className="relative overflow-hidden bg-linear-to-br from-gray-50 to-gray-100 ">
         <img
           src={book.coverImage}
           alt={book.title}
-          className="w-full aspect-[16/25] object-cover transition-transform duration-500 group-hover:scale-105"
+          className="w-full aspect-16/25 object-cover transition-transform duration-500 group-hover:scale-105"
           onError={(e) => {
             e.target.src = "";
           }}
@@ -47,15 +47,15 @@ const BookCard = ({ book, onDelete }) => {
       </div>  
 
       <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent backdrop-blur-x5"></div>
+        <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent backdrop-blur-x5"></div>
         <div className="relative">
           <h3 className="font-semibold text-white text-sm leading-tight line-clamp-2 mb-1">{book.title}</h3>
           <p className="text-[13px] text-gray-300 font-medium">{book.userId.name}</p>
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-orange-500 via-amber-500
-      to-rose-500 opacity-0 group-hover:opacity:100 transition-opacity duration-300 " />
+      <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-linear-to-r from-orange-500 via-amber-500
+      to-rose-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 " />
     </div>
   );
 };
