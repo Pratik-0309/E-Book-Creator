@@ -1,4 +1,3 @@
-// context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
 import axiosInstance from "../utils/axiosInstance.js";
 
@@ -52,14 +51,8 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const updatedUser = async (updatedUserData) => {
-    try {
-      const newUserData = { ...user, ...updatedUserData };
-      const res = await axiosInstance.patch("/api/auth/update", newUserData);
-      setUser(res.data.user);
-    } catch (error) {
-      console.error("Update user failed:", error);
-    }
+  const updatedUser = (newUserData) => {
+    setUser({ ...newUserData });
   };
 
   const value = {
