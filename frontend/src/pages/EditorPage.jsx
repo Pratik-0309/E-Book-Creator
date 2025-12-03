@@ -11,6 +11,7 @@ import {
   NotebookText,
   ChevronDown,
   FileText,
+  Loader,
 } from "Lucide-react";
 import { arrayMove } from "@dnd-kit/sortable";
 
@@ -62,7 +63,15 @@ function EditorPage() {
 
   const handleBookChange = (e) => {
     const { name, value } = e.target;
-    setBook((prev) => ({ ...prev, [name]: value }));
+    if (name === "title" || name === "subtitle") {
+      setBook((prev) => ({
+        ...prev,
+        book: {
+          ...prev.book,
+          [name]: value,
+        },
+      }));
+    }
   };
 
   const handleChapterChange = (eOrString) => {
@@ -200,7 +209,7 @@ function EditorPage() {
         const updatedChapters = chapters.map((ch, idx) =>
           idx === index ? { ...ch, content: response.data.content } : ch
         );
-        
+
         const updatedInnerBook = {
           ...prevBookState.book,
           chapters: updatedChapters,
@@ -245,8 +254,46 @@ function EditorPage() {
 
   if (isLoading || !book) {
     return (
-      <div className="flex h-screen items-center justify-between">
-        <p>Loading Editor ....</p>
+      <div className="flex h-screen bg-slate-50 font-sans relative animate-pulse">
+        <div className="w-64 border-r border-slate-200 bg-white hidden md:block">
+          <div className="p-4 border-b border-slate-200">
+            <div className="h-4 bg-slate-200 rounded w-3/4"></div>
+          </div>
+          <div className="p-4 space-y-3">
+            {Array.from({ length: 10 }).map((_, i) => (
+              <div key={i} className="h-5 bg-slate-100 rounded w-full"></div>
+            ))}
+          </div>
+        </div>
+
+        <main className="flex flex-1 flex-col p-4 md:p-6 bg-slate-50">
+          <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-slate-200 p-4 flex justify-between items-center mb-6 rounded-xl shadow-sm">
+            <div className="flex items-center gap-4">
+              <div className="h-8 bg-slate-200 rounded-lg w-20 hidden sm:block"></div>
+              <div className="h-8 bg-slate-200 rounded-lg w-24 hidden sm:block"></div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="h-10 bg-slate-200 rounded-lg w-20"></div>
+              <div className="h-10 bg-violet-600 rounded-lg w-28"></div>
+            </div>
+          </header>
+
+          <div className="p-8 max-w-4xl mx-auto w-full">
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+              <div className="h-6 bg-slate-200 rounded w-1/3 mb-4"></div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="h-10 bg-slate-100 rounded"></div>
+                <div className="h-10 bg-slate-100 rounded"></div>
+                <div className="md:col-span-2 h-10 bg-slate-100 rounded"></div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center py-12">
+              <Loader className="w-8 h-8 text-violet-600 animate-spin" />
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
@@ -358,19 +405,13 @@ function EditorPage() {
             </div>
             <div className="flex items-center gap-3 sm:gap-4">
               {" "}
-              <Dropdown
-                trigger={
-                  <Button variant="secondary" icon={FileDown}>
-                    Export
-                    <ChevronDown className="w-4 h-4 ml-1" />
-                  </Button>
-                }
+              <Button
+                variant="secondary"
+                icon={FileDown}
+                onClick={handleExportDoc}
               >
-                <DropdownItem onClick={handleExportDoc}>
-                  <FileText className="w-4 h-4 mr-2 text-slate-500" />
-                  Export as DOCX
-                </DropdownItem>
-              </Dropdown>
+                Export
+              </Button>
               <Button
                 onClick={() => handleSaveChanges()}
                 isLoading={isSaving}
