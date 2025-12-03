@@ -9,7 +9,7 @@ router.route('/login').post(LoginUser);
 router.route('/logout').post(LogoutUser);
 router.route('/refresh-token').post(refreshAccessToken);
 router.route('/profile').get(verifyJWT, getProfile);
-router.route('/update').patch(verifyJWT, updateProfile);
+router.route('/update').put(verifyJWT, updateProfile);
 
 
 
