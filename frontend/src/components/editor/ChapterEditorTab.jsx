@@ -160,7 +160,7 @@ export default function ChapterEditorTab({
                 size="sm"
                 className=""
               >
-                Generate with Ai
+                {isGenerating ? "generating .....": "Generate with Ai"}
               </Button>
             </div>
           </div>
