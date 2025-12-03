@@ -14,7 +14,6 @@ Got an idea? Let's turn it into a beautiful book!
 * **Instant Plan (Outline):** Give it a topic, and the AI will create a complete book plan (chapter titles and ideas) right away. No more planning headaches!
 * **Fast Drafting:** Need content? The AI can write the first draft of your chapters for you.
 * **Easy Editing:** Use our simple, modern text box (like a smart notebook) to change the AI's words and add your own thoughts.
-* **Organize with a Drag:** Easily click and drag chapters to put them in the right order.
 
 ### 🎨 Design & Your Workspace
 * **Custom Cover:** Upload your own great cover picture (JPEG, PNG) for your book.
@@ -23,7 +22,6 @@ Got an idea? Let's turn it into a beautiful book!
 
 ### 📤 Saving & Sharing (Export)
 When your book is finished, you can save it in the perfect format:
-* **PDF File:** Ready to share and read!
 * **DOCX File:** Great if you need to keep editing it in Microsoft Word later.
 
 ---
@@ -32,7 +30,6 @@ When your book is finished, you can save it in the perfect format:
 
 This app is a **MERN** project—that's a popular recipe for building modern apps. 
 
-[Image of MERN stack logo]
 
 
 | Part of the App | Technology | Simple Explanation |
@@ -107,12 +104,6 @@ You can now open your web browser and go to `http://localhost:5173` to see the a
 3.  **Get a Plan:** Click the **"AI Generate Outline"** button.
 4.  **Write Drafts:** Click into a chapter and press **"AI Draft Content"** to get words on the page.
 5.  **Make it Yours:** Use the editor to fix the words, add your voice, and make it perfect.
-6.  **Download:** Hit the **PDF** or **DOCX** button to save your finished book!
-
----
-
-## 📄 Legal Stuff (License)
-
-This project is open for anyone to use and change under the **MIT License**. Check the `LICENSE` file for all the details!
+6.  **Download:** Hit the **DOCX** button to save your finished book!
 
 ---
